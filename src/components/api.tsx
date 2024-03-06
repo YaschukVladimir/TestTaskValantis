@@ -3,18 +3,19 @@ import { BASE_URL } from "../utils/const";
 import { authorizationString, calculateOffset } from "../utils/utils";
 import { LoaderFunc, ProductsIds, SetProductsToStateFunc } from "../utils/types";
 
-export function fetchProductIds(loaderFunc: LoaderFunc, setProductsToState: SetProductsToStateFunc, page: number, productsLimit: number) {
+export function fetchProductIds(loaderFunc: LoaderFunc, setProductsToState: SetProductsToStateFunc, page: number, productsLimit: number, setActionData) {
     loaderFunc(true)
     axios
       .post(
         BASE_URL,
-        {
-          action: 'get_ids',
-          params: {
-            offset: calculateOffset(page, productsLimit),
-            limit: productsLimit,
-          },
-        },
+        // {
+        //   action: 'get_ids',
+        //   params: {
+        //     offset: calculateOffset(page, productsLimit),
+        //     limit: productsLimit,
+        //   },
+        // },
+        setActionData('price', 10000),
         {
           headers: {
             'X-Auth': authorizationString,
@@ -24,7 +25,7 @@ export function fetchProductIds(loaderFunc: LoaderFunc, setProductsToState: SetP
       .then((response) => {
         const productIds = response.data.result
         fetchProducts(productIds, loaderFunc, setProductsToState)
-        loaderFunc(false)
+        // loaderFunc(false)
       })
       .catch((error) => {
         console.error('Error fetching product IDs:', error)
@@ -50,9 +51,7 @@ export function fetchProductIds(loaderFunc: LoaderFunc, setProductsToState: SetP
       )
       .then((response) => {
         const products = response.data.result
-        // const uniqueProducts = removeDuplicates(products, 'id')
         setProductsToState(products)
-        // console.log('uniqueProducts products', uniqueProducts)
         loaderFunc(false)
       })
       .catch((error) => {
