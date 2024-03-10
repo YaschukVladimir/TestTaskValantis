@@ -4,13 +4,13 @@ export type ProductsIds = ProductId[];
 
 export type ProductId = string;
 
-export type SetProductsToStateFunc = React.Dispatch<React.SetStateAction<Product[]>>
+export type SetProductsToStateFunc = React.Dispatch<React.SetStateAction<Product[]>>;
 
 export type Product = {
     brand: string | null,
     id: string,
     price: number,
     product: string,
-}
+};
 
 export type Products = Product[] | [];

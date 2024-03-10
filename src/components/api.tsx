@@ -40,7 +40,7 @@ export function fetchProductIds(loaderFunc: LoaderFunc, setProductsToState: SetP
     const idsToFetch: string[] = [];
     productIds.forEach((id) => {
       if (сachedProducts.has(id)) {
-        resultProducts.push(сachedProducts.get(id));
+        resultProducts.push(сachedProducts.get(id) as Product);
       } else {
         idsToFetch.push(id);
       }
