@@ -4,9 +4,7 @@ export type ProductsIds = ProductId[];
 
 export type ProductId = string;
 
-// export type SetProductsToStateFunc = (arg: ProductsIds) => void;
-
-export type SetProductsToStateFunc = React.Dispatch<React.SetStateAction<never[]>>
+export type SetProductsToStateFunc = React.Dispatch<React.SetStateAction<Product[]>>
 
 export type Product = {
     brand: string | null,
@@ -15,4 +13,4 @@ export type Product = {
     product: string,
 }
 
-export type Products = Product[];
+export type Products = Product[] | [];

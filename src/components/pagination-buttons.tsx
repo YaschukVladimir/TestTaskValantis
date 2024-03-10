@@ -6,7 +6,7 @@ type PaginationButtonsProps = {
 
 function PaginationButtons({currentPage, setCurrentPage}: PaginationButtonsProps): React.JSX.Element {
 
-    const handlePageChange = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handlePageChange = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         evt.preventDefault();
         if (evt.currentTarget.classList.contains('prev')) {
             setCurrentPage(currentPage - 1);
@@ -18,8 +18,8 @@ function PaginationButtons({currentPage, setCurrentPage}: PaginationButtonsProps
 
     return (
         <div className="pagination__wrapper">
-            <button className="pagination__button prev"
-                onClick={(evt) => handlePageChange(evt)}>
+            <button className={`pagination__button prev ${currentPage <= 1 ? 'disabled' : ''}`}
+                onClick={(evt) => handlePageChange(evt)} disabled={currentPage <= 1 ? true : false}>
                     Previous page
             </button>
             <span className="pagination__page">страница {currentPage}</span>

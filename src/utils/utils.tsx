@@ -2,7 +2,7 @@ import { password } from "./const";
 import CryptoJS from 'crypto-js';
 import { Products } from "./types";
 
-export function calculateOffset(currentPage: number, limit: number) {
+export function calculateOffset(currentPage: number, limit: number): number {
     return currentPage > 0 ? (currentPage - 1) * limit : 0;
 }
 
@@ -11,7 +11,7 @@ const authPassword = `${password}_${timestamp}`;
 
 export const authorizationString = CryptoJS.MD5(authPassword).toString();
 
-export function deleteDuplicateProducts(products: Products) {
+export function deleteDuplicateProducts(products: Products): Products {
     const uniqueProducts = new Map();
     products.forEach(product => {
         if (!uniqueProducts.has(product.id)) {
@@ -20,33 +20,4 @@ export function deleteDuplicateProducts(products: Products) {
     });
 
     return Array.from(uniqueProducts.values());
-}
-
-export function setFilterType(type: string, price = 0, page = 1, productsLimit: number, brand = '') {
-    switch (type) {
-        case 'base':
-            return (
-                {
-                    action: 'get_ids',
-                    params: {
-                      offset: calculateOffset(page, productsLimit),
-                      limit: productsLimit,
-                    },
-                  }
-            );
-        case 'price':
-            return (
-                {
-                    action: 'filter',
-                    params: {'price': price}
-                }
-            );
-        case 'brand':
-            return (
-                {
-                    action: 'filter',
-                    params: {'brand': brand}
-                }
-            )
-    }
 }
