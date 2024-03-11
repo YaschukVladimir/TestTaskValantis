@@ -14,3 +14,9 @@ export type Product = {
 };
 
 export type Products = Product[] | [];
+
+export type ParamsType = {
+    brand?: string,
+    name?: string,
+    price?: number
+}

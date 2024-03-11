@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/const";
 import { authorizationString, calculateOffset } from "../utils/utils";
-import { LoaderFunc, Product, ProductsIds, SetProductsToStateFunc } from "../utils/types";
+import { LoaderFunc, ParamsType, Product, ProductsIds, SetProductsToStateFunc } from "../utils/types";
 
 const сachedProducts = new Map<string, Product>();
 
@@ -78,64 +78,14 @@ export function fetchProductIds(loaderFunc: LoaderFunc, setProductsToState: SetP
     }
   }
 
-export function fetchFilteredProductsbyPrice(loaderFunc: LoaderFunc, setProductsToState: SetProductsToStateFunc, price: number ):void {
+export function fetchFilteredProducts(loaderFunc: LoaderFunc, setProductsToState: SetProductsToStateFunc, params: ParamsType ): void {
   loaderFunc(true);
   axios
   .post(
     BASE_URL,
     {
       action: 'filter',
-      params: {'price': price}
-  },
-    {
-      headers: {
-        'X-Auth': authorizationString,
-      },
-    }
-  )
-  .then((response) => {
-    const productIds = response.data.result;
-    fetchProducts(productIds, loaderFunc, setProductsToState);
-  })
-  .catch((error) => {
-    console.error('Error fetching product IDs:', error);
-    loaderFunc(false);
-  })
-}
-
-export function fetchFilteredProductsbyBrand(loaderFunc: LoaderFunc, setProductsToState: SetProductsToStateFunc, brand: string ): void {
-  loaderFunc(true);
-  axios
-  .post(
-    BASE_URL,
-    {
-      action: 'filter',
-      params: {'brand': brand}
-  },
-    {
-      headers: {
-        'X-Auth': authorizationString,
-      },
-    }
-  )
-  .then((response) => {
-    const productIds = response.data.result;
-    fetchProducts(productIds, loaderFunc, setProductsToState);
-  })
-  .catch((error) => {
-    console.error('Error fetching product IDs:', error);
-    loaderFunc(false);
-  })
-}
-
-export function fetchFilteredProductsbyName(loaderFunc: LoaderFunc, setProductsToState: SetProductsToStateFunc, name: string ): void {
-  loaderFunc(true);
-  axios
-  .post(
-    BASE_URL,
-    {
-      action: 'filter',
-      params: {'name': name}
+      params: params
   },
     {
       headers: {
@@ -152,3 +102,4 @@ export function fetchFilteredProductsbyName(loaderFunc: LoaderFunc, setProductsT
     loaderFunc(false)
   })
 }
+

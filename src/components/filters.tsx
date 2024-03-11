@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { fetchFilteredProductsbyBrand, fetchFilteredProductsbyName, fetchFilteredProductsbyPrice, fetchProductIds } from "./api";
+import { fetchFilteredProducts, fetchProductIds } from "./api";
 import { limit } from "../utils/const";
 import { Product } from "../utils/types";
 
@@ -15,15 +15,15 @@ function ProductFilters({setIsLoading, setProducts}: ProductFiltersProps): React
 
     const handleFilterProducts = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         if (evt.currentTarget.classList.contains('brand')) {
-            fetchFilteredProductsbyBrand(setIsLoading, setProducts, brandName);
+            fetchFilteredProducts(setIsLoading, setProducts, {brand: brandName});
             setBrandName('');
         }
         if (evt.currentTarget.classList.contains('price')) {
-            fetchFilteredProductsbyPrice(setIsLoading, setProducts, Number(price));
+            fetchFilteredProducts(setIsLoading, setProducts, {price: Number(price)});
             setPrice('');
         }
         if (evt.currentTarget.classList.contains('name')) {
-            fetchFilteredProductsbyName(setIsLoading, setProducts, name);
+            fetchFilteredProducts(setIsLoading, setProducts, {name: name});
             setName('');
         }
     }
